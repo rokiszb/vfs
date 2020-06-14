@@ -1,25 +1,38 @@
 <?php
 
-use App\FileNode;
+if (php_sapi_name() !== 'cli') {
+    exit;
+}
+
+$command = $argv[1];
+$arguments = @$argv[2];
+$fileDestination = @$argv[3];
+
+if (empty($command)) {
+    die("Command or arguments not found\n");;
+}
 
 include 'bootstrap.php';
 
-$file = new FileNode('text.txt', 'bla');
-var_dump($file);
+echo "To start interacting with VFS type mkdir /my/dir/\n";
 
-echo "Are you sure you want to do this?  Type 'yes' to continue: ";
+switch ($command) {
+    case 'mkdir':
+        $fileSystem->createDirectory($arguments);
+        break;
+    case 'traverse':
+        $fileSystem->traverse('/', $fileSystem->getHead()->getSubFolders());
+        break;
+    case 'cp':
+        $fileSystem->addFile($arguments, $fileDestination);
+        break;
+    default:
+        die("Command not found\n");;
+}
 
-$handle = fopen ("php://stdin","r");
-$input = fgets($handle);
 
-// if( != 'yes'){
-//     echo "ABORTING!\n";
-//     exit;
-// }
-
-var_dump(trim($input));
-
-
+// var_dump(trim($input));
+// var_dump($fileSystem);
 //create or delete virtual folder
 
 //view virtual folder tree
