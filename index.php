@@ -29,14 +29,3 @@ switch ($command) {
     default:
         die("Command not found\n");;
 }
-
-
-// var_dump(trim($input));
-// var_dump($fileSystem);
-//create or delete virtual folder
-
-//view virtual folder tree
-
-// add or remove file from local file system to the virtual folder (only one file with same name can be in virtual folder)
-
-// list files ir virtual folder
